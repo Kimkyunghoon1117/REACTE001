@@ -1,5 +1,7 @@
 package com.edu.boardback.config;
 
+import java.io.IOException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -7,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -15,6 +19,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.edu.boardback.filter.JwtAuthenticationFilter;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -49,6 +56,12 @@ public class WebSecurityConfig {
             // .csrf().disable() //CSRF 보호를 비활성화
             // .httpBasic().disable() // Http basic Auth 기반으로 로그인 인증창이 뜸. disable 시에 인증창 뜨지 않음
             // .sessionManagement().sessionCreationPolicy(SessionCreateionPolicy.STATELESS).and()
+            // .authorizeRequests()
+            // .antMatchers("/","/api/v1/auth/**","/api/v1/search/**","/file/**").permitAll()
+            // .antMatchers(HttpMethod.GET,"/api/v1/board/**","/api/v1/user/*").permitAll()
+            // .anyRequest().authenticated().and()
+            // .exceptionHandling().authenticationEntryPoint(new FailedAuthenticationEntryPoint());
+            // httpSecurity.addFilterBefor(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
@@ -64,4 +77,17 @@ public class WebSecurityConfig {
 
         return source;
     }
+}
+
+class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint{
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException authException) throws IOException, ServletException {
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("{\"code:\":\"AF\",\"message\":\"Authorization Failed.\"}");
+
+    }
+
 }
