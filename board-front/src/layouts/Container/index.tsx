@@ -12,11 +12,9 @@ export default function Container() {
     //      render: 레이아웃 렌더링     //
   return (
     <>
-        {pathname}
         <Header />
         <Outlet />
         {pathname !== AUTH_PATH() && <Footer />}
-        
     </>
   )
 }
