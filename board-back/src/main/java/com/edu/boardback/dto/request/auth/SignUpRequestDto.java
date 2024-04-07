@@ -1,4 +1,4 @@
-package com.dto.request.auth;
+package com.edu.boardback.dto.request.auth;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;

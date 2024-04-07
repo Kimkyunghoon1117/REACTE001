@@ -1,11 +1,11 @@
-package com.dto.response.auth;
+package com.edu.boardback.dto.response.auth;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.common.ResponseCode;
-import com.common.ResponseMessage;
-import com.dto.response.ResponseDto;
+import com.edu.boardback.common.ResponseCode;
+import com.edu.boardback.common.ResponseMessage;
+import com.edu.boardback.dto.response.ResponseDto;
 
 import lombok.Getter;
 

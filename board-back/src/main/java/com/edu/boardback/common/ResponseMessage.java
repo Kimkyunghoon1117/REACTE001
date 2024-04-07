@@ -1,4 +1,4 @@
-package com.common;
+package com.edu.boardback.common;
 
 public interface ResponseMessage {
     //HTTP Status 200

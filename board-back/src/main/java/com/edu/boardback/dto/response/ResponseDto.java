@@ -1,10 +1,10 @@
-package com.dto.response;
+package com.edu.boardback.dto.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.common.ResponseCode;
-import com.common.ResponseMessage;
+import com.edu.boardback.common.ResponseCode;
+import com.edu.boardback.common.ResponseMessage;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

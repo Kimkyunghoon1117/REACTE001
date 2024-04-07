@@ -1,4 +1,4 @@
-package com.common;
+package com.edu.boardback.common;
 
 public interface ResponseCode {
     //HTTP Status 200
