@@ -13,19 +13,27 @@ const SIGN_UP_URL = () => `${API_DOMAIN}/auth/sign-up`;
 export const signInRequest = async (reqeustBody:SignInRequestDto) => {
     const result = await axios.post(SIGN_IN_URL(), reqeustBody)
         .then(response => {
-            console.log("then -"+response);
             const responseBody:SignInResponseDto = response.data;
             return responseBody;
         })
         .catch(error => {
-            console.log("catch - "+error.response);
             if(!error.response || !error.response.data) return null;
             const responseBody:ResponseDto = error.response.data;
             return responseBody;
-        })
+        });
     return result;
 };
 
 export const signUpRequest = async (reqeustBody:SignUpRequestDto) => {
-
+    const result = await axios.post(SIGN_UP_URL(), reqeustBody)
+        .then(response => {
+            const responseBody:SignInResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response || !error.response.data) return null;
+            const responseBody:ResponseDto = error.response.data;
+            return responseBody;
+        });
+    return result;
 };
