@@ -6,7 +6,7 @@ interface BoardStore {
     boardImageFileList: File[];
     setTitle: (title:string)=>void;
     setContent: (content:string)=>void;
-    setBoardImageFildList: (boardImageFileList:File[])=>void;
+    setBoardImageFileList: (boardImageFileList:File[])=>void;
     resetBoard: ()=> void;
 };
 
@@ -16,7 +16,7 @@ const useBoardStore = create<BoardStore>(set=>({
     boardImageFileList: [],
     setTitle: title=>set(state=>({...state,title})),
     setContent: content=>set(state=>({...state,content})),
-    setBoardImageFildList: boardImageFileList=>set(state=>({...state,boardImageFileList})),
+    setBoardImageFileList: boardImageFileList=>set(state=>({...state,boardImageFileList})),
     resetBoard: ()=>set(state=>({...state, title:'', content:'', boardImageFileList:[]}))
 }));
 
