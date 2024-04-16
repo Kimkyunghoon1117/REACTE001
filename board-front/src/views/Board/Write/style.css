@@ -22,12 +22,13 @@
 .board-write-title-box{
     width: 100%;
 }
-.board-write-title-input{
+.board-write-title-textarea{
     width: 100%;
     border: none;
     outline: none;
     background: none;
-
+    resize: none;
+    
     color: rgba(0, 0, 0, 1);
     font-size: 32px;
     font-weight: 500;
