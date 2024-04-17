@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edu.boardback.dto.request.board.PostBoardRequestDto;
+import com.edu.boardback.dto.response.borad.GetBoardResponseDto;
 import com.edu.boardback.dto.response.borad.PostBoardResponseDto;
 import com.edu.boardback.service.BoardService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/v1/board")
@@ -20,6 +23,15 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
     
     private final BoardService boardService;
+
+    @GetMapping("/{boardNumber}")
+    public ResponseEntity<? super GetBoardResponseDto> getBoard(
+        @PathVariable("boardNumber") Integer boardNumber
+    ) {
+        ResponseEntity<? super GetBoardResponseDto> response = boardService.getBoard(boardNumber);
+        return response;
+    }
+    
 
     @PostMapping("")
     public ResponseEntity<? super PostBoardResponseDto> postBoard(
