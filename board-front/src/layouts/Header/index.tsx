@@ -5,6 +5,11 @@ import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRIT
 import { useCookies } from 'react-cookie';
 import { useBoardStore, useLoginUserStore } from 'stores';
 import path from 'path';
+import { fileUploadRequest, postBoardRequest } from 'apis';
+import { PostBoardRequestDto } from 'apis/request/board';
+import { PostBoardResponseDto } from 'apis/response/board';
+import { ResponseDto } from 'apis/response';
+import { log } from 'console';
 
 //    component: 헤더 레이아웃   //
 export default function Header() {
@@ -143,9 +148,40 @@ export default function Header() {
     //    state: 게시물 상태    //
     const { title, content, boardImageFileList, resetBoard } = useBoardStore();
 
-    //    event Handler: 업로드 버튼 클릭 이벤트 처리 함수    //
-    const onUploadButtonClickHandler = () => {
+    //    function: post board response 처리 함수   //
+    const postBoardResponse = (responseBody: PostBoardResponseDto|ResponseDto|null) => {
+      if(!responseBody) return;
+      const { code } = responseBody;
+      if( code === 'AF' || code === 'NU') navigate(AUTH_PATH());
+      if(code==='VF') alert('제목과 내용은 필수입니다.');
+      if(code==='DBE') alert('데이터베이스 오류입니다.');
+      if(code!=='SU') return; 
+      
+      resetBoard();
+      if(!loginUser) return;
+      const { email } = loginUser;
+      navigate(USER_PATH(email));
+    }
 
+    //    event Handler: 업로드 버튼 클릭 이벤트 처리 함수    //
+    const onUploadButtonClickHandler = async () => {
+      const accessToken = cookies.accessToken;
+      if(!accessToken) return;
+
+      const boardImageList:string[] = [];
+
+      for(const file of boardImageFileList){
+        const data = new FormData();
+        data.append('file',file);
+
+        const url = await fileUploadRequest(data);
+        if(url) boardImageList.push(url);
+      }
+
+      const requestBody: PostBoardRequestDto = {
+        title, content, boardImageList
+      }
+      postBoardRequest(requestBody, accessToken).then(postBoardResponse);
     }
 
     //    render: 업로드 버튼 컴포넌트 렌더링  //
