@@ -3,6 +3,7 @@ package com.edu.boardback.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.edu.boardback.dto.request.board.PostBoardRequestDto;
 import com.edu.boardback.dto.response.borad.GetBoardResponseDto;
 import com.edu.boardback.dto.response.borad.PostBoardResponseDto;
+import com.edu.boardback.dto.response.borad.PutFavoriteResponseDto;
 import com.edu.boardback.service.BoardService;
 
 import jakarta.validation.Valid;
@@ -39,6 +41,15 @@ public class BoardController {
         @AuthenticationPrincipal String email
     ){
         ResponseEntity<? super PostBoardResponseDto> response = boardService.postBorad(requestBody, email);
+        return response;
+    }
+
+    @PutMapping("/{boardNumber}/favorite")
+    public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(
+        @PathVariable("boardNumber") Integer boardNumber,
+        @AuthenticationPrincipal String email
+    ){
+        ResponseEntity<? super PutFavoriteResponseDto> response = boardService.putFavorite(boardNumber, email);
         return response;
     }
 }
