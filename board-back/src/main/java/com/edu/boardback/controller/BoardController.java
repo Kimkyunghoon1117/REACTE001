@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.edu.boardback.dto.request.board.GetCommentListResponseDto;
 import com.edu.boardback.dto.request.board.PostBoardRequestDto;
 import com.edu.boardback.dto.request.board.PostCommentRequestDto;
 import com.edu.boardback.dto.response.borad.GetBoardResponseDto;
@@ -42,6 +43,14 @@ public class BoardController {
         @PathVariable("boardNumber") Integer boardNumber
     ){
         ResponseEntity<? super GetFavoriteListResponseDto> response = boardService.getFavoriteList(boardNumber);
+        return response;
+    }
+
+    @GetMapping("/{boardNumber}/comment-list")
+    public ResponseEntity<? super GetCommentListResponseDto> getCommentList(
+        @PathVariable("boardNumber") Integer boardNumber
+    ){
+        ResponseEntity<? super GetCommentListResponseDto> response = boardService.getCommentList(boardNumber);
         return response;
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.edu.boardback.dto.request.board.GetCommentListResponseDto;
 import com.edu.boardback.dto.request.board.PostBoardRequestDto;
 import com.edu.boardback.dto.request.board.PostCommentRequestDto;
 import com.edu.boardback.dto.response.ResponseDto;
@@ -24,6 +25,7 @@ import com.edu.boardback.repository.FavoriteRepository;
 import com.edu.boardback.repository.ImageRepository;
 import com.edu.boardback.repository.UserRepository;
 import com.edu.boardback.repository.resultSet.GetBoardResultSet;
+import com.edu.boardback.repository.resultSet.GetCommentListResultSet;
 import com.edu.boardback.repository.resultSet.GetFavoriteListResultSet;
 import com.edu.boardback.service.BoardService;
 
@@ -78,6 +80,25 @@ public class BoardServiceImplement implements BoardService {
             return ResponseDto.databaseError();
         }
         return GetFavoriteListResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer boardNumber) {
+        
+        List<GetCommentListResultSet> resultSets = new ArrayList<>();
+
+        try {
+            
+            boolean existedBorad = boardRepository.existsByBoardNumber(boardNumber);
+            if(!existedBorad) return GetCommentListResponseDto.noExistBoard();
+
+            resultSets = commentRepository.getCommentList(boardNumber);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetCommentListResponseDto.success(resultSets);
     }
 
     @Override
@@ -158,6 +179,5 @@ public class BoardServiceImplement implements BoardService {
         return PutFavoriteResponseDto.success();
     }
 
-    
    
 }
