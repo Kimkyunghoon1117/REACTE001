@@ -18,8 +18,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/* 눈모양 아이콘 없애기 */
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear{
   display: none;
+}
+/* 커서 없애기 */
+div {
+  caret-color: transparent;
 }
