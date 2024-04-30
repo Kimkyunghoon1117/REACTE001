@@ -1,5 +1,8 @@
+import GetBoardResponseDto from './get-borad.response.dto';
 import PostBoardResponseDto from './post-board.response.dto';
-
+import IncreaseViewCountResponseDto from './increase-view-count.response.dto';
 export type {
-    PostBoardResponseDto
+    GetBoardResponseDto,
+    PostBoardResponseDto,
+    IncreaseViewCountResponseDto
 }

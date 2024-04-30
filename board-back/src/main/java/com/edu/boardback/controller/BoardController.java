@@ -13,6 +13,7 @@ import com.edu.boardback.dto.request.board.PostBoardRequestDto;
 import com.edu.boardback.dto.request.board.PostCommentRequestDto;
 import com.edu.boardback.dto.response.borad.GetBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetFavoriteListResponseDto;
+import com.edu.boardback.dto.response.borad.IncreaseViewCountResponseDto;
 import com.edu.boardback.dto.response.borad.PostBoardResponseDto;
 import com.edu.boardback.dto.response.borad.PostCommentResponseDto;
 import com.edu.boardback.dto.response.borad.PutFavoriteResponseDto;
@@ -21,6 +22,7 @@ import com.edu.boardback.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
@@ -80,6 +82,14 @@ public class BoardController {
         @AuthenticationPrincipal String email
     ){
         ResponseEntity<? super PutFavoriteResponseDto> response = boardService.putFavorite(boardNumber, email);
+        return response;
+    }
+
+    @GetMapping("/{boardNumber}/increase-view-count")
+    public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewcount(
+        @PathVariable("boardNumber") Integer boardNumber
+    ){
+        ResponseEntity<? super IncreaseViewCountResponseDto> response = boardService.increaseViewCount(boardNumber);
         return response;
     }
 }
