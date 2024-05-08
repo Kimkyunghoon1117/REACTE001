@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.edu.boardback.dto.request.board.GetCommentListResponseDto;
 import com.edu.boardback.dto.request.board.PostBoardRequestDto;
 import com.edu.boardback.dto.request.board.PostCommentRequestDto;
+import com.edu.boardback.dto.response.borad.DeleteBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetFavoriteListResponseDto;
 import com.edu.boardback.dto.response.borad.IncreaseViewCountResponseDto;
@@ -21,6 +22,8 @@ import com.edu.boardback.service.BoardService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,6 +85,15 @@ public class BoardController {
         @AuthenticationPrincipal String email
     ){
         ResponseEntity<? super PutFavoriteResponseDto> response = boardService.putFavorite(boardNumber, email);
+        return response;
+    }
+
+    @DeleteMapping("/{boardNumber}")
+    public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(
+        @PathVariable("boardNumber") Integer boardNumber,
+        @AuthenticationPrincipal String email
+    ){  
+        ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(boardNumber, email);
         return response;
     }
 

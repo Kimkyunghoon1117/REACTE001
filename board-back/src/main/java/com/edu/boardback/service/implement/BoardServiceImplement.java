@@ -10,6 +10,7 @@ import com.edu.boardback.dto.request.board.GetCommentListResponseDto;
 import com.edu.boardback.dto.request.board.PostBoardRequestDto;
 import com.edu.boardback.dto.request.board.PostCommentRequestDto;
 import com.edu.boardback.dto.response.ResponseDto;
+import com.edu.boardback.dto.response.borad.DeleteBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetFavoriteListResponseDto;
 import com.edu.boardback.dto.response.borad.IncreaseViewCountResponseDto;
@@ -190,6 +191,33 @@ public class BoardServiceImplement implements BoardService {
             return ResponseDto.databaseError();
         }
         return IncreaseViewCountResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email) {
+        
+        try {
+            boolean existedUser = userRepository.existsByEmail(email);
+            if(!existedUser) return DeleteBoardResponseDto.noExistUser();
+
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if(boardEntity == null) return DeleteBoardResponseDto.noExistBoard();
+
+            String writerEmail = boardEntity.getWriterEmail();
+            boolean isWriter = writerEmail.equals(email);
+            if(!isWriter) return DeleteBoardResponseDto.noPermission();
+
+            imageRepository.deleteByBoardNumber(boardNumber);
+            commentRepository.deleteByBoardNumber(boardNumber);
+            favoriteRepository.deleteByBoardNumber(boardNumber);
+
+            boardRepository.delete(boardEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return DeleteBoardResponseDto.success();
     }
 
    
