@@ -15,6 +15,7 @@ import com.edu.boardback.dto.request.board.PostCommentRequestDto;
 import com.edu.boardback.dto.response.borad.DeleteBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetFavoriteListResponseDto;
+import com.edu.boardback.dto.response.borad.GetLatestBoardListResponseDto;
 import com.edu.boardback.dto.response.borad.IncreaseViewCountResponseDto;
 import com.edu.boardback.dto.response.borad.PatchBoardResponseDto;
 import com.edu.boardback.dto.response.borad.PostBoardResponseDto;
@@ -61,6 +62,19 @@ public class BoardController {
         return response;
     }
 
+    @GetMapping("/{boardNumber}/increase-view-count")
+    public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewcount(
+        @PathVariable("boardNumber") Integer boardNumber
+    ){
+        ResponseEntity<? super IncreaseViewCountResponseDto> response = boardService.increaseViewCount(boardNumber);
+        return response;
+    }
+
+    @GetMapping("/latest-list")
+    public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList() {
+        ResponseEntity<? super GetLatestBoardListResponseDto> response = boardService.getLatestBoardList();
+        return response;
+    }
 
     @PostMapping("")
     public ResponseEntity<? super PostBoardResponseDto> postBoard(
@@ -110,11 +124,7 @@ public class BoardController {
         return response;
     }
 
-    @GetMapping("/{boardNumber}/increase-view-count")
-    public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewcount(
-        @PathVariable("boardNumber") Integer boardNumber
-    ){
-        ResponseEntity<? super IncreaseViewCountResponseDto> response = boardService.increaseViewCount(boardNumber);
-        return response;
-    }
+
+
+
 }
