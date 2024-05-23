@@ -3,7 +3,6 @@ package com.edu.boardback.dto.request.board;
 import java.util.*;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import com.edu.boardback.common.ResponseCode;

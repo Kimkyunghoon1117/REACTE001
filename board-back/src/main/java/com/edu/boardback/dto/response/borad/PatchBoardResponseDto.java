@@ -1,7 +1,6 @@
 package com.edu.boardback.dto.response.borad;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import com.edu.boardback.common.ResponseCode;

@@ -196,7 +196,7 @@ public class BoardServiceImplement implements BoardService {
             boardRepository.save(boardEntity);
 
             imageRepository.deleteByBoardNumber(boardNumber);
-            List<String> boardImageList = dto.getBoradImageList();
+            List<String> boardImageList = dto.getBoardImageList();
             List<ImageEntity> imageEntites = new ArrayList<>();
 
             for(String image: boardImageList) {

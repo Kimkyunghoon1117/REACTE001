@@ -67,6 +67,7 @@ public class BoardController {
         @RequestBody @Valid PostBoardRequestDto requestBody,
         @AuthenticationPrincipal String email
     ){
+        
         ResponseEntity<? super PostBoardResponseDto> response = boardService.postBorad(requestBody, email);
         return response;
     }
