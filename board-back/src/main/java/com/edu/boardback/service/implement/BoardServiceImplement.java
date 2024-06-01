@@ -1,6 +1,10 @@
 package com.edu.boardback.service.implement;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -15,6 +19,7 @@ import com.edu.boardback.dto.response.borad.DeleteBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetBoardResponseDto;
 import com.edu.boardback.dto.response.borad.GetFavoriteListResponseDto;
 import com.edu.boardback.dto.response.borad.GetLatestBoardListResponseDto;
+import com.edu.boardback.dto.response.borad.GetTop3BoardListResponseDto;
 import com.edu.boardback.dto.response.borad.IncreaseViewCountResponseDto;
 import com.edu.boardback.dto.response.borad.PatchBoardResponseDto;
 import com.edu.boardback.dto.response.borad.PostBoardResponseDto;
@@ -119,6 +124,24 @@ public class BoardServiceImplement implements BoardService {
             return ResponseDto.databaseError();
         }
         return GetLatestBoardListResponseDto.success(boardListViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList() {
+
+        List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+        try {
+            
+            Date beforeWeek = Date.from(Instant.now().minus(7,ChronoUnit.DAYS));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String sevenDaysAgo = simpleDateFormat.format(beforeWeek);
+            boardListViewEntities = boardListViewRepository.findTop3ByWriteDatetimeGreaterThanOrderByFavoriteCountDescCommentCountDescViewCountDescWriteDatetimeDesc(sevenDaysAgo);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetTop3BoardListResponseDto.success(boardListViewEntities);
     }
 
     @Override
